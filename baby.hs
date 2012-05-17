@@ -8,14 +8,18 @@ infixFunction1 = 9 `div` 3
 infixFunction2 = div 9 3
 infixFunctionPrecedence = 9 `div` 3 + 1
 
-cake = 81 `div` 9 `div` 3 + 1
-
 --function application notations: div 9 3; 9 `div` 3
 --function application has the highest precedence order
 
 doubleMe x = x + x
 doubleUs x y = doubleMe x + doubleMe y
 
-doubleSmallNumber x = if x < 100
+--else branch is mandatory
+doubleSmallNumber x = if x > 100
                       then x
                            else x * 2
+--if statement is an expression; everything is an expression
+doubleSmallNumber2 x = (if x > 100 then x else x * 2) + 1
+
+--function without arguments is a definition
+cake = "cake is a lie"
