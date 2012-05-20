@@ -48,3 +48,7 @@ bounded1 = maxBound :: Int
 bounded2 = maxBound :: Char
 maxBound' :: (Bounded a) => a
 maxBound' = maxBound
+
+fromIntegral' :: (Num b, Integral a) => a -> b
+fromIntegral' x = fromIntegral x
+fromIntegral'Test = fromIntegral (length [1,2,3,4,5]) + 3.2
