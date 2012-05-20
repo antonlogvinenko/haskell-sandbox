@@ -23,3 +23,21 @@ doubleSmallNumber2 x = (if x > 100 then x else x * 2) + 1
 
 --function without arguments is a definition
 cake = "cake is a lie"
+
+--strings are lists
+list1 = "cake " ++ "is a lie"
+
+--append, O(length(array1))
+list2 = [1, 2] ++ [3, 4]
+
+--prepend O(1)
+list3 = 1:[2, 3]
+someList = [1, 2, 3, 4]
+getItem = someList !! 3
+getHead = head someList
+getTail = tail someList
+getLast = last someList
+getInit = init someList
+getLength = length someList
+getNull1 = null someList
+getNull2 = null []
