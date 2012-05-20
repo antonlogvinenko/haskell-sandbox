@@ -58,3 +58,15 @@ getNumRange = [1..20]
 getStringRange = ['a'..'z']
 getStepRange1 = [20, 19..1]
 getStepRange2 = [1, 3..20]
+getCycle = take 10 (cycle [1, 2, 3])
+getRepeat = take 10 (repeat 5)
+getReplicate = replicate 3 5
+
+--list comprehensions
+getComp1 = [x*2 | x<-[1..10]]
+getComp2 = [x*2 | x<-[1..10], x*2>=12]
+boomBang xs = [if x < 10 then "boom!" else "bang!" | x<-xs, odd x]
+getComp3 = [x | x <- [1..20], x/=13, x/=15, x/=19]
+getComp4 = [x*y | x <- [2, 5, 10], y <- [6, 9, 4]]
+getComp5 = [x*y | x <- [2, 5, 10], y <- [6, 9, 7], x*y < 25]
+length' xs = sum [1 | _ <- xs]
