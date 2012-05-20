@@ -24,6 +24,9 @@ doubleSmallNumber2 x = (if x > 100 then x else x * 2) + 1
 --function without arguments is a definition
 cake = "cake is a lie"
 
+
+
+
 --strings are lists
 list1 = "cake " ++ "is a lie"
 
@@ -41,3 +44,17 @@ getInit = init someList
 getLength = length someList
 getNull1 = null someList
 getNull2 = null []
+doReverse = reverse someList
+doTake = take 2 someList
+doDrop = drop 2 someList
+getMin = minimum someList
+getMax = maximum someList
+getSum = sum someList
+getProd = product someList
+getHasElem = elem 4 someList
+
+
+getNumRange = [1..20]
+getStringRange = ['a'..'z']
+getStepRange1 = [20, 19..1]
+getStepRange2 = [1, 3..20]
