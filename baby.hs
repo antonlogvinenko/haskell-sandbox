@@ -70,3 +70,14 @@ getComp3 = [x | x <- [1..20], x/=13, x/=15, x/=19]
 getComp4 = [x*y | x <- [2, 5, 10], y <- [6, 9, 4]]
 getComp5 = [x*y | x <- [2, 5, 10], y <- [6, 9, 7], x*y < 25]
 length' xs = sum [1 | _ <- xs]
+removeNonUpperCase st = [c | c <- st, c `elem` ['A'..'Z']]
+xxs = [[1,4,8,3,6,8,3,7,3,2,6,1], [3,6,2,8,9,4,0,5,4,7,1], [4,5,3,1,9,5,7,3,4,6]]
+blowingMyMindComprehension = [[x | x <- xs, even x] | xs <- xxs]
+
+--tuples
+tuple1 = fst (34, 45)
+tuple2 = snd (56, 78)
+zip1 = zip [1, 3, 5, 7] [2, 4, 6, 8, 10]
+zip2 = zip [1, 3, 5, 7] ['a'..'z']
+zipp3 = zip [1..] ["orange", "apple", "cherry"]
+smokedTriangles = [ (a, b, c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2+b^2==c^2, a+b+c=24]
