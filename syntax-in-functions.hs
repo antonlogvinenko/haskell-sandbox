@@ -53,3 +53,13 @@ sum' (x:xs) = x + sum' xs
 capital :: String -> String
 capital "" = "Empty string!"
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
+
+
+--guards
+bmiTell :: (RealFloat a) => a -> String
+bmiTell bmi
+        | bmi <= 18.5 = "You're underweight"
+	| bmi <= 25.0 = "You're mornal"
+	| bmi <= 30.0 = "You're fat"
+	| otherwise = "Congratulations, you're a whale"
+
