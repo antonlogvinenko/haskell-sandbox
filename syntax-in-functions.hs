@@ -1,3 +1,9 @@
+--pattern matching
+--guards
+--where
+--let
+--case expressions
+
 
 lucky :: (Integral a) => a -> String
 lucky 7 = "Lucky number seven!"
@@ -63,3 +69,37 @@ bmiTell bmi
 	| bmi <= 30.0 = "You're fat"
 	| otherwise = "Congratulations, you're a whale"
 
+bmiTell2 :: (RealFloat a) => a -> a -> String
+bmiTell2 weight height
+	| weight / height ^ 2 <= 18.5 = "Underweight"
+	| weight / height ^ 2 <= 25.0 = "Normal"
+	| weight / height ^ 2 <= 30.0 = "Fat"
+	| otherwise = "Congratulations, you're a whale"
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+	| a < b = b
+	| otherwise = a
+
+myCompare :: (Ord a) => a -> a -> Ordering
+a `myCompare` b
+	| a > b = GT
+	| a == b = EQ
+	| otherwise = LT
+
+
+
+--where
+bmiTell3 :: (RealFloat a) => a -> a -> String
+bmiTell3 weight height
+	| bmi <= skinny = "You are skinny"
+	| bmi <= normal = "You are normal"
+	| bmi <= fat = "You are fat"
+	| otherwise = "You are a whale"
+	where bmi = weight / height ^ 2
+	      (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+initials :: String -> String -> String
+initials first second = [f] ++ ". " ++ [s] ++ "."
+	where (f:_) = first
+              (s:_) = second
