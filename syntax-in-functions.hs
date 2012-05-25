@@ -103,3 +103,7 @@ initials :: String -> String -> String
 initials first second = [f] ++ ". " ++ [s] ++ "."
 	where (f:_) = first
               (s:_) = second
+
+calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis xs = [bmi w h | (w, h) <- xs ]
+              where bmi weight height = weight / height ^ 2
