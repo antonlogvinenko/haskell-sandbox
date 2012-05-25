@@ -108,6 +108,12 @@ calcBmis :: (RealFloat a) => [(a, a)] -> [a]
 calcBmis xs = [bmi w h | (w, h) <- xs ]
               where bmi weight height = weight / height ^ 2
 
+describeList :: [a] -> String
+describeList xs = "This list is " ++ what xs
+                  where what [] = "empty."
+                        what [x] = "a singleton list."
+                        what xs = "a longer list."
+
 
 --let
 cylinder :: (RealFloat a) => a -> a -> a
@@ -124,3 +130,20 @@ test4 = (let (a, b, c) = (1, 2, 3) in a + b + c) * 100
 calcBmis2 :: (RealFloat a) => [(a, a)] -> [a]
 calcBmis2 xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
 calcBmis3 xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25]
+
+
+--case expressions
+head'' :: [a] -> a
+head'' xs = case xs of [] -> error "Head of an empy list? Kinda kiddin me?"
+                       (x:_) -> x
+
+describeList' :: [a] -> String
+describeList' xs  = "This list is " ++ case xs of [] -> "empty."
+   					          [x] -> "a singleton list."
+                                                  xs -> "a longer list."
+
+
+--summary:
+--function: pattern matching level; guards level; where for all guards in a matched pattern
+--let is similar to where but is an expression
+--case expression is similar to pattern matching but is an expression
