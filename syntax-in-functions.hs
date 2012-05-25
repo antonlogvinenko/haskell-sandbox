@@ -107,3 +107,20 @@ initials first second = [f] ++ ". " ++ [s] ++ "."
 calcBmis :: (RealFloat a) => [(a, a)] -> [a]
 calcBmis xs = [bmi w h | (w, h) <- xs ]
               where bmi weight height = weight / height ^ 2
+
+
+--let
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+	let sideArea = 2 * pi * r * h
+            topArea = pi * r ^ 2
+        in sideArea + 2 * topArea
+test1 = 4 * (let a = 9 in a + 1) + 2
+test2 = let square x = x * x in (square 2, square 3, square 4)
+test3 = (let a = 100; b = 2; c = 3 in a * b * c, let a = "cake is a "; b = "lie" in a ++ b)
+--pattern mathing in let bindings:
+test4 = (let (a, b, c) = (1, 2, 3) in a + b + c) * 100
+--let in list comprehensions
+calcBmis2 :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis2 xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
+calcBmis3 xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25]
