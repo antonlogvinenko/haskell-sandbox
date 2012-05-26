@@ -58,4 +58,10 @@ largestDivisible = head (filter p [100000, 99999..])
 sick = sum $ takeWhile (< 1000) $ filter odd $ map (^2) [1..]
 
 
---lambdas
+--lambdas, single pattern matching
+zipper = zipWith (\a b -> (a * 30 + 3) / b) [5, 6, 9, 4] [54, 2, 8, 9]
+mapper = map (\(a, b) -> a + b) [(1, 2), (3, 4), (5, 6)]
+curryingLambdaHeyHey = \x -> \y -> \z -> x + y + z
+
+flip3 :: (a -> b -> c) -> (b -> a -> c)
+flip3 f = \x y -> f y x
