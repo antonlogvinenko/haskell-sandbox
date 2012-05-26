@@ -14,4 +14,4 @@ divideByTen :: (Floating a) => a -> a
 divideByTen = (/ 10)
 
 isUpperAlfanum :: Char -> Bool
-isUpperAlfanum = (`elem` ['A'..'Z'])
+isUpperAlfanum = `elem` ['A'..'Z'])
