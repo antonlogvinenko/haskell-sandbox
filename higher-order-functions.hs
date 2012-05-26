@@ -50,3 +50,12 @@ quicksort' (x:xs) =
 	let lessThanX = filter' (<= x) xs
 	    moreThanX = [y | y <- xs, y > x ]
 	in lessThanX ++ [x] ++ moreThanX
+
+largestDivisible :: (Integral a) => a
+largestDivisible = head (filter p [100000, 99999..])
+                   where p x = x `mod` 3829 == 0
+
+sick = sum $ takeWhile (< 1000) $ filter odd $ map (^2) [1..]
+
+
+--lambdas
