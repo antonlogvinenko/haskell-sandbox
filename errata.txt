@@ -1,3 +1,6 @@
 http://learnyouahaskell.com/introduction
 was able put together the pieces
 was able to put together the pieces
+
+http://learnyouahaskell.com/higher-order-functions
+But then, the second parameter to also has to be of that type
