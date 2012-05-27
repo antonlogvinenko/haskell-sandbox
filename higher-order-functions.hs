@@ -126,3 +126,8 @@ cool = ceiling . negate . tan . cos . max 50
 
 stupidStyle = sum (takeWhile (< 10000) (filter odd (map (^2) [1..])))
 pointStyle = sum . takeWhile (< 10000) . filter odd . map (^2) $ [1..]
+
+
+
+--haskell has infix and prefix functions, space for function application, prefix functions have higher priority than infix functions
+-- . and $ functions are build atop of all this stuff
