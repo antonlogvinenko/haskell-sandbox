@@ -58,6 +58,8 @@ largestDivisible = head (filter p [100000, 99999..])
 sick = sum $ takeWhile (< 1000) $ filter odd $ map (^2) [1..]
 
 
+
+
 --lambdas, single pattern matching
 zipper = zipWith (\a b -> (a * 30 + 3) / b) [5, 6, 9, 4] [54, 2, 8, 9]
 mapper = map (\(a, b) -> a + b) [(1, 2), (3, 4), (5, 6)]
@@ -65,3 +67,42 @@ curryingLambdaHeyHey = \x -> \y -> \z -> x + y + z
 
 flip3 :: (a -> b -> c) -> (b -> a -> c)
 flip3 f = \x y -> f y x
+
+
+
+
+--folds
+sum1 :: (Num a) => [a] -> a
+sum1 xs = foldl (\acc x -> acc + x) 0 xs
+
+--currying foldl
+sum2 :: (Num a) => [a] -> a
+sum2 = foldl (+) 0
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' x xs = foldl (\acc y -> if x == y then True else acc) False xs
+
+--map2 to be implemented with right fold as : is less expensive than ++
+map2 :: (a -> b) -> [a] -> [b]
+map2 f xs = foldr (\x acc -> f x : acc) [] xs
+
+--foldl1 and foldr 1 use first element as accumulator initial value
+product' :: (Num a) => [a] -> a
+product' = foldr1 (*)
+
+last' :: [a] -> a
+last' = foldl1 (\_ x -> x)
+
+--scanl, scanr report all accumulator values; similar scanl1, scanr1
+
+
+
+
+
+--function applicaton with $
+($$) :: (a -> b) -> a -> b
+f $$ x = f x
+
+--this thing makes me mad, guys
+crazyStuff = map ($ 3) [(4+), (10*), (^2), sqrt]
+crazyStuff2 = map ($$ 3) [(6+), (9*), (^3), sqrt]
