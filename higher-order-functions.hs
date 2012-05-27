@@ -106,3 +106,23 @@ f $$ x = f x
 --this thing makes me mad, guys
 crazyStuff = map ($ 3) [(4+), (10*), (^2), sqrt]
 crazyStuff2 = map ($$ 3) [(6+), (9*), (^3), sqrt]
+
+
+
+
+--function composition - operator . redefined as #
+(#) :: (b -> c) -> (a -> b) -> a -> c
+f # g = \x -> f $ g x
+
+tryComp = map (negate . abs) [-4, -5, -6, -9, 0, 4]
+tryComp2 = map (negate . sum . tail) [[1..5], [5..9], [3..6]]
+
+--point free style
+sum' :: (Num a) => [a] -> a
+sum' = foldl1 (+)
+
+notCool x = ceiling (negate (tan (cos (max 50 x))))
+cool = ceiling . negate . tan . cos . max 50
+
+stupidStyle = sum (takeWhile (< 10000) (filter odd (map (^2) [1..])))
+pointStyle = sum . takeWhile (< 10000) . filter odd . map (^2) $ [1..]
