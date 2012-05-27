@@ -27,5 +27,28 @@ and2 = and $ map (>4) [9, 9]
 --or is analogous
 --any, all - same with predicate
 
+iterate1 = take 10 $ iterate (*2) 1
+iterate2 = take 3 $ iterate (++ "haha") "haha"
+
+splitAt1 = splitAt 3 "heyyou"
+
+takeWhile1 = takeWhile (>2) [6, 5, 4, 2, 10]
+--dropWhile, span, break, sort, group, inits, tails
+--isInfixOf, isSuffixOf, elem, notElem, elemIndex, find, elemIndices
+--findIndex, findIndices
+--zip3, zip4
+--lines, unlines
+--words, unwords
+--nub
 
 
+
+--maps
+findKey1 :: (Eq k) => k -> [(k, v)] -> Maybe v
+findKey1 key [] = Nothing
+findKey1 key ((k,v):xs) = if key == k
+                         then Just v
+                              else findKey1 key xs
+
+findKey2 :: (Eq k) => k -> [(k, v)] -> Maybe v
+findKey2 key = foldr (\(k, v) acc -> if k == key then Just v else acc) Nothing
