@@ -1,7 +1,7 @@
 -- **** Algebraic data types
 
---the type and type constructors
---type constructors are functions, type is a concrete type
+--the type and value constructors
+--value constructors are functions, type is a concrete type
 data Bool = False | True
 data Shape = Circle Float Float Float | Rectangle Float Float Float Float
 -- :t Circle produces:
@@ -23,10 +23,10 @@ data Shape2 = Circle2 Float Float Float | Rectangle2 Float Float Float Float der
 -- Circle2 10 20 5
 -- Rectangle2 50 230 60 90
 
---type constructors are functions, and the result is printable:
+--value constructors are functions, and the result is printable:
 mapping = map (Circle2 10 20) [4, 5, 6]
 
---just the same name for the type and type constructor
+--just the same name for the type and value constructor
 data Point = Point Float Float deriving (Show)
 data Shape3 = Circle3 Point Float | Rectangle3 Point Point deriving (Show)
 surface2 :: Shape3 -> Float
@@ -38,17 +38,48 @@ nudge (Circle3 (Point x y) r) a b = Circle3 (Point (x + a) (y + b)) r
 nudge (Rectangle3 (Point x1 y1) (Point x2 y2)) a b = Rectangle3 (Point (x1 + a) (y1 + b)) (Point (x2 + a) (y2 + b))
 
 --and now, auxilliary functions:
-baseCircle :: Float -> Shape
+baseCircle :: Float -> Shape3
 baseCircle r = Circle3 (Point 0 0) r
 
-baseRect :: Float -> Float -> Shape
-baseRect width height = Rectangle (Point 0 0) (Point width height)
+baseRect :: Float -> Float -> Shape3
+baseRect width height = Rectangle3 (Point 0 0) (Point width height)
 
 --importing types
 --module Shapes ( Point(..), Shape(..), baseCircle, baseRectangle) where
---also possible ot skip importing type constructors so that only aux function are accessible outside
+--also possible ot skip importing value constructors so that only aux function are accessible outside
 
 
 
 
 -- **** Record syntax
+data Person1 = Person1 String String Int Float String String deriving (Show)
+guy1 = Person1 "Buddy" "Frank" 43 184.2 "532" "Chocolate"
+
+data Person = Person {firstName :: String, lastName :: String, age :: Int, height :: Float, phoneNumber :: String, flavor :: String} deriving (Show)
+--field names are real functions
+-- :t firstName is:
+-- firstName :: Person -> String
+
+data Car = Car {company :: String, model :: String, year :: Int} deriving (Show)
+a = Car {company = "Ford", model = "Mustang", year = 1967}
+-- printed in a different manner
+
+
+
+
+-- **** Type parameters
+--Maybe a - type constructor
+data Maybe a = Nothing | Just a
+
+data Vector a = Vector a a a deriving (Show)
+
+vplus :: (Num t) => Vector t -> Vector t -> Vector t
+(Vector i j k) `vplus` (Vector l m n) = Vector (i + l) (j + m) (k + n)
+
+vectMult :: (Num t) => Vector t -> t -> Vector t
+(Vector i j k) `vectMult` m = Vector (i*m) (j*m) (k*m)
+
+
+
+
+-- **** Derived instances
