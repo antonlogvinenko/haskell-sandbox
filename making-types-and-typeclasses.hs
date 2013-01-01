@@ -83,3 +83,25 @@ vectMult :: (Num t) => Vector t -> t -> Vector t
 
 
 -- **** Derived instances
+data Person3 = Person3 {firstName3 :: String, lastName3 :: String, age3 :: Int} deriving (Eq, Show, Read)
+-- person is now printable, readable, comparable
+mikeD = Person3 {firstName3 = "Michael", lastName3 = "Diamond", age3 = 43}
+showMikeD = show mikeD
+--also compare, read
+
+--data Bool2 = False2 | True2 deriving (Ord)
+--comparable, the first is lesser
+
+data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday deriving (Eq, Ord, Show, Read, Bounded, Enum)
+showMonday = show Monday
+readMonday = read "Monday" :: Day
+equality = Saturday == Sunday
+minBoundDay = minBound :: Day
+succDay = succ Monday
+daysRange = [Thursday .. Sunday]
+allDaysRange = [minBound .. maxBound] :: [Day]
+
+
+
+
+-- **** Type synonyms
