@@ -2,7 +2,7 @@
 
 --the type and value constructors
 --value constructors are functions, type is a concrete type
-data Bool = False | True
+data Bool1 = False1 | True1
 data Shape = Circle Float Float Float | Rectangle Float Float Float Float
 -- :t Circle produces:
 -- Circle :: Float -> Float -> Float -> Shape
@@ -105,3 +105,26 @@ allDaysRange = [minBound .. maxBound] :: [Day]
 
 
 -- **** Type synonyms
+type String2 = [Char]
+type PhoneNumber = String
+type Name = String
+type PhoneBook = [(Name, PhoneNumber)]
+
+inPhoneBook :: Name -> PhoneNumber -> PhoneBook -> Bool
+inPhoneBook name pnumber pbook = (name, pnumber) `elem` pbook
+
+type AssocList k v = [(k, v)]
+
+--partially applied!
+type IntMap1 v = Map Int v
+type IntMap2 = Map Int
+
+
+
+
+
+-- **** Recursive data structures
+-- **** Typeclasses 102
+-- **** Yes-no typeclass
+-- **** The Functor typeclass
+-- **** Kinds
