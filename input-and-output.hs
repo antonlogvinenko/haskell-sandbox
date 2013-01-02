@@ -1,19 +1,19 @@
 -- **** Hello world
-main1 = putStrLn "Hello, world!"
--- :t putStrLn has a type of IO ()
--- IO is an action with some result type, () in this case
--- IO is run when given a name main and run OR when inside another IO action composed with do syntax OR in when in ghci
+-- :t putStrLn has a type of "IO ()"
+-- :t getStrLen has a type of "IO String"
 
---do syntax
---each step is an IO action
---result of IO action is the result of the last step, no binding there
--- <- binds IO action result to a name
+-- IO actions can be executed in the main function or in another IO action (or in ghci)
+
+-- another IO action is performed via do syntax
+-- IO actions execute and return something only inside IO, can bind the result via <-
+-- all steps are IO actions, all except the last one are allowed to bind
+-- the last step is the result of the containing IO action
+
+main1 = putStrLn "Hello, world!"
 main2 = do
   putStrLn "Hello, what's your name?"
-  name <- getLine
-  putStrLn ("Hey " ++ name ++ ", you rock!")
-
-             
+  getLine
+  putStrLn ("Hey "  ++ ", you rock!")
 
 main3 = do
   putStrLn "Hello, what's your name?"
