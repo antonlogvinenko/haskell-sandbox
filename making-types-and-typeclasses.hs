@@ -69,7 +69,7 @@ a = Car {company = "Ford", model = "Mustang", year = 1967}
 
 -- **** Type parameters
 --Maybe a - type constructor
-data Maybe a = Nothing | Just a
+data Maybe1 a = Nothing1 | Just1 a
 
 data Vector a = Vector a a a deriving (Show)
 
@@ -116,15 +116,53 @@ inPhoneBook name pnumber pbook = (name, pnumber) `elem` pbook
 type AssocList k v = [(k, v)]
 
 --partially applied!
-type IntMap1 v = Map Int v
-type IntMap2 = Map Int
-
+data Map1 k v = Empty1 | Map1 {head :: (k, v), tail :: Map1 k v}
+type IntMap1 v = Map1 Int v
+type IntMap2 = Map1 Int
 
 
 
 
 -- **** Recursive data structures
+
+
+
+
 -- **** Typeclasses 102
+class Eq1 a where
+    (===) :: a -> a -> Bool
+    (/==) :: a -> a -> Bool
+    x === y = not (x /== y)
+    x /== y = not (x === y)
+
+data TrafficLight = Red | Yellow | Green
+-- implementing minimal subset
+instance Eq1 TrafficLight where
+    Red === Red = True
+    Green === Green = True
+    Yellow === Yellow = True
+    _ === _ = False
+
+-- subclassing typeclasses:
+--class (Eq a) => Num a where
+
+--typeclasses instantiation: making all (Maybe m) of typeclass Eq, considering m is of Eq:
+instance (Eq m) => Eq (Maybe1 m) where
+    Just1 x == Just1 y = x == y
+    Nothing1 == Nothing1 = True
+    _ == _ = False
+
+
+
+
 -- **** Yes-no typeclass
+
+
+
+
+
 -- **** The Functor typeclass
 -- **** Kinds
+
+-- 1. types (with or without parameters), synonyms, deriving typeclasses
+-- 2. typeclasses, subclassing, instantiation
