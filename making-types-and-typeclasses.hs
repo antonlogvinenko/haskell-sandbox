@@ -1,6 +1,6 @@
--- 1. types (with or without parameters), synonyms, deriving typeclasses
--- 2. typeclasses, subclassing, instantiation
-
+-- 1. types (with or without parameters), synonyms, deriving typeclasses; partial application
+-- 2. typeclasses, subclassing, instantiation; partial application in definition
+-- 3. relations in definition and with (partial) parent
 
 
 
@@ -188,7 +188,43 @@ instance YesNo TrafficLight where
 
 
 -- **** The Functor typeclass
+class MyFunctor f where
+    myFmap :: (a -> b) -> f a -> f b
+
+instance MyFunctor [] where
+    myFmap = map
+
+instance MyFunctor Maybe where
+    myFmap f (Just x) = Just (f x)
+    myFmap f Nothing = Nothing
+
+data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+instance MyFunctor Tree where
+    myFmap f EmptyTree = EmptyTree
+    myFmap f (Node x leftsub rightsub) = Node (f x) (myFmap f leftsub) (myFmap f rightsub)
+
+data MyEither a b = MyLeft a | MyRight b
+instance MyFunctor (MyEither a) where
+    myFmap f (MyRight x) = MyRight (f x)
+    myFmap f (MyLeft x) = MyLeft x
+
+
 
 
 -- **** Kinds
+class ToFu t where
+    tofu :: j a -> t a j
+
+data Frank a b = Frank {frankField :: b a} deriving (Show)
+
+instance ToFu Frank where
+    tofu x = Frank x
+
+-- tofu (Just 'a') :: Frank Char Maybe
+
+data Barry t k p = Barry {yabba :: p, dabba :: t k}
+
+instance Functor (Barry a b) where
+    fmap f (Barry {yabba = x, dabba = y}) = Barry {yabba = f x, dabba = y}
+
 
