@@ -1,4 +1,5 @@
 import Data.Char
+import System.IO
 
 -- **** Hello world
 -- :t putStrLn has a type of "IO ()"
@@ -98,12 +99,17 @@ main12 = interact respondPalindromes
 respondPalindromes :: String -> String
 respondPalindromes contents = unlines (map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome") (lines contents))
                               where isPalindrome xs = xs == reverse xs
-
 main13 = interact respondPalindromes2
 respondPalindromes2 :: String -> String
 respondPalindromes2 = unlines . (map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome")) . lines
                                where isPalindrome xs = xs == reverse xs
 
+
+main14 = do
+  handle <- openFile "girlfriend.txt" ReadMode
+  contents <- hGetContents handle
+  putStr contents
+  hClose handle
 
 -- **** Command line arguments
 -- **** Randomness
