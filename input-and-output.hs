@@ -1,6 +1,9 @@
 import Data.Char
 import System.IO
 import System.Random
+import qualified Data.ByteString.Lazy as B  
+import qualified Data.ByteString as S  
+
 
 -- **** Hello world
 -- :t putStrLn has a type of "IO ()"
@@ -194,8 +197,18 @@ main18 = do
 
 
 -- **** Bytestrings
+-- String is [Char], Char size is not fixed and lists are lazy, reasons why bytestrings exist
+-- Data.ByteString - no laziness
+-- Data.ByteString - lazy, but evaluated by chunks
 
-
+-- B.pack :: [Word8] -> ByteString
+pack1 = B.pack [99, 97, 110]
+pack2 = B.pack [98..120]
+-- B.pack, S.pack, B.unpack, S.unpack
+-- B.fromChunks - strict bytestreams to lazy; toChunks - back
+-- B.cons, B.cons'
+-- empty creates an empty bytestring
+-- readFile, writeFile
 
 
 
