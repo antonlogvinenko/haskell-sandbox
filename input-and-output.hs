@@ -119,6 +119,21 @@ main14 = do
 main15 = do
   withFile "girlfriend.txt" ReadMode (\handle -> do contents <- hGetContents handle; putStr contents)
 
+-- wow, let's implement withFile1
+withFile1 :: FilePath -> IOMode -> (Handle -> IO a) -> IO a
+withFile1 path mode f = do
+  handle <- openFile path mode
+  result <- f handle
+  hClose handle
+  return result
+
+main16 = do withFile "girlfriend.txt" ReadMode (\handle -> do contents <- hGetContents handle; putStr contents)
+
+-- also, consider functions hGetLine, hPutStr, hPutStrLn, hGetChar
+-- readFile, writeFile, appendFile
+-- hSetBuffering :: Handle -> BufferMode -> IO ()
+-- type BufferMode = NoBuffering | LineBuffering | BlockBuffering (Maybe Int)
+
 -- **** Command line arguments
 -- **** Randomness
 -- **** Bytestrings
