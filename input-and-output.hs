@@ -233,4 +233,4 @@ toTry = do (fileName:_) <- getArgs
 handler :: IOError -> IO ()  
 handler e  
     | isDoesNotExistError e = putStrLn "The file doesn't exist!"  
-    | otherwise = ioError e  
+    | otherwise = ioError e
