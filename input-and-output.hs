@@ -1,5 +1,6 @@
 import Data.Char
 import System.IO
+import System.Random
 
 -- **** Hello world
 -- :t putStrLn has a type of "IO ()"
@@ -142,7 +143,41 @@ main17 = do
                                        contents <- hGetContents handle
                                        putStr contents)
 
+
+
+
 -- **** Command line arguments
+-- System.Environment:
+-- getArgs :: IO[String]
+-- getProgName :: IO String
+
+
+
+
 -- **** Randomness
+-- System.Random.random :: (RandomGen g, Random a) => g -> (a, g)
+-- mkStdGen :: Int -> StdGen
+genRandInt = random $ mkStdGen 100 :: (Int, StdGen)
+getRandFloat = random $ mkStdGen 100 :: (Float, StdGen)
+
+threeCoins :: StdGen -> (Bool, Bool, Bool)
+threeCoins gen =
+    let (firstCoin, newGen) = random gen
+        (secondCoin, newGen') = random newGen
+        (thirdCoin, _) = random newGen'
+    in (firstCoin, secondCoin, thirdCoin)
+
+-- let's use randoms :: (RandomGen g, Random a) => g -> [a]
+-- first let's implement it:
+randoms' :: (RandomGen g, Random a) => g -> [a]
+randoms' gen = let (value, newGen) = random gen in value : randoms' newGen
+
+finiteRandoms :: (RandomGen g, Random a, Num n) => n -> g -> ([a], g)
+finiteRandoms 0 gen = ([], gen)
+finiteRandoms n gen =
+    let (value, newGen) = random gen
+        (restOfList, finalGen) = finiteRandoms (n - 1) newGen
+    in (value:restOfList, finalGen)
+
 -- **** Bytestrings
 -- **** Exceptions
