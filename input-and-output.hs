@@ -133,6 +133,14 @@ main16 = do withFile "girlfriend.txt" ReadMode (\handle -> do contents <- hGetCo
 -- readFile, writeFile, appendFile
 -- hSetBuffering :: Handle -> BufferMode -> IO ()
 -- type BufferMode = NoBuffering | LineBuffering | BlockBuffering (Maybe Int)
+-- hFlush
+-- openTempFile :: FilePath -> String -> IO (FilePath, Handle)
+
+main17 = do
+  withFile "something.txt" ReadMode (\handle -> do
+                                       hSetBuffering handle $ BlockBuffering (Just 2048)
+                                       contents <- hGetContents handle
+                                       putStr contents)
 
 -- **** Command line arguments
 -- **** Randomness
