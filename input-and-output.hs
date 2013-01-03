@@ -64,6 +64,15 @@ sequenceTest = sequence $ map print [1, 2, 3]
 
 
 -- **** Files and streams
+-- getContents reads standard input until EOF is encountered
+-- getContents :: IO String
+main6 = do
+  contents <- getContents
+  putStr $ map toUpper contents
+
+
+
+
 -- **** Command line arguments
 -- **** Randomness
 -- **** Bytestrings
