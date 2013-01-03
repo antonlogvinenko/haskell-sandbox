@@ -104,12 +104,20 @@ respondPalindromes2 :: String -> String
 respondPalindromes2 = unlines . (map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome")) . lines
                                where isPalindrome xs = xs == reverse xs
 
-
+-- openFile signature: FilePath -> IOMode -> IO Handle
+-- type FilePath = String
+-- IOMode = ReadMode | WriteMode | AppendMode | ReadWriteMode
+-- hGetContents is just like getContents but with a handle
 main14 = do
   handle <- openFile "girlfriend.txt" ReadMode
   contents <- hGetContents handle
   putStr contents
   hClose handle
+
+-- withFile does all that job
+-- withFile :: FilePath -> IOMode -> (IOHandle -> IO a) -> IO a
+main15 = do
+  withFile "girlfriend.txt" ReadMode (\handle -> do contents <- hGetContents handle; putStr contents)
 
 -- **** Command line arguments
 -- **** Randomness
