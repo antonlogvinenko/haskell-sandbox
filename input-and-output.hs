@@ -59,3 +59,12 @@ reverseWords = unwords . map reverse . words
 sequenceTest = sequence $ map print [1, 2, 3]
 -- printed result is [(), (), ()] - concatenaited results of IO acions
 -- result is printed for evaluated IO actions in ghci if only it is not ()
+
+
+
+
+-- **** Files and streams
+-- **** Command line arguments
+-- **** Randomness
+-- **** Bytestrings
+-- **** Exceptions
