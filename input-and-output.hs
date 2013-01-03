@@ -3,7 +3,8 @@ import System.IO
 import System.Random
 import qualified Data.ByteString.Lazy as B  
 import qualified Data.ByteString as S  
-
+import System.Environment  
+import System.IO.Error 
 
 -- **** Hello world
 -- :t putStrLn has a type of "IO ()"
@@ -212,4 +213,24 @@ pack2 = B.pack [98..120]
 
 
 
+
 -- **** Exceptions
+-- impure code throws exceptions, IO errors for instance
+-- pure code throws exceptions, div by 0 for instance
+-- exceptions may only be caught in IO part of code, because the code is lazy and only proved to evaluate in IO
+
+-- catch function - catch :: IO a -> (IOError -> IO a) -> IO a
+-- ioError :: IOException -> IO a   -   IO anything, actually
+-- 'a' is '()' in the following example
+
+main19 = toTry `catch` handler  
+              
+toTry :: IO ()  
+toTry = do (fileName:_) <- getArgs  
+           contents <- readFile fileName  
+           putStrLn $ "The file has " ++ show (length (lines contents)) ++ " lines!"  
+  
+handler :: IOError -> IO ()  
+handler e  
+    | isDoesNotExistError e = putStrLn "The file doesn't exist!"  
+    | otherwise = ioError e  
