@@ -179,5 +179,24 @@ finiteRandoms n gen =
         (restOfList, finalGen) = finiteRandoms (n - 1) newGen
     in (value:restOfList, finalGen)
 
+-- random in range: randomR, randomRs
+rrr = randomR (1,6) (mkStdGen 359353) :: (Int, StdGen)
+
+-- getStdGen :: IO StdGen
+main18 = do
+  gen <- getStdGen
+  putStr $ take 20 $ randomRs ('a', 'z') gen
+
+-- but getStdGen returns the same generator
+-- so use newStdGen after getStdGen (returns new gen and updates the global one) or generate infinite list based on stdGen
+
+  
+
+
 -- **** Bytestrings
+
+
+
+
+
 -- **** Exceptions
