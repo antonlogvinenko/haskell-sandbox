@@ -66,11 +66,43 @@ sequenceTest = sequence $ map print [1, 2, 3]
 -- **** Files and streams
 -- getContents reads standard input until EOF is encountered
 -- getContents :: IO String
+-- String is [Char], lazy
 main6 = do
   contents <- getContents
   putStr $ map toUpper contents
 
+main7 = do
+  contents <- getContents
+  putStr $ shortLinesOnly contents
 
+shortLinesOnly :: String -> String
+shortLinesOnly input =
+    let allLines = lines input
+        shortLines = filter (\line -> length line < 10) allLines
+        result = unlines shortLines
+    in result
+
+-- function interact does just that: interact :: (String -> String) -> IO ()
+main8 = interact shortLinesOnly
+
+-- or even shorter:
+main9 = interact $ unlines . filter ((<10) . length) . lines
+-- or
+main10 = let filtering = (< 10) . length
+         in interact $ unlines . filter filtering . lines
+--or
+main11 = interact $ unlines . filter filterFun . lines
+         where filterFun = (< 10) . length
+
+main12 = interact respondPalindromes
+respondPalindromes :: String -> String
+respondPalindromes contents = unlines (map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome") (lines contents))
+                              where isPalindrome xs = xs == reverse xs
+
+main13 = interact respondPalindromes2
+respondPalindromes2 :: String -> String
+respondPalindromes2 = unlines . (map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome")) . lines
+                               where isPalindrome xs = xs == reverse xs
 
 
 -- **** Command line arguments
