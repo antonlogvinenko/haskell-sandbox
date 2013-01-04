@@ -16,3 +16,8 @@ solveRPN = head . foldl folding [] . words
                             folding (x:y:ys) "+" = (x + y) : ys
                             folding (x:y:ys) "-" = (x - y) : ys
                             folding xs number = read number : xs
+
+
+
+
+-- **** Heathrow to London
