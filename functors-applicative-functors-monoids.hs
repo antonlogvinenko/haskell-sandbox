@@ -125,6 +125,19 @@ instance Applicative IO where
       x <- b
       return (f x)
 
+myAction :: IO String
+myAction = (++) <$> getLine <*> getLine
+
+main13 = do
+  a <- (++) <$> getLine <*> getLine
+  putStrLn $ "The two lines contcatenated to be: " ++ a
+
+-- for (->) r
+instance Applicative ((->) r) where
+    pure x = (\_ -> x)
+    f <*> g = \x -> f x (g x)
+main14 = pure (+) <*> (+3)
+
 
 
 
