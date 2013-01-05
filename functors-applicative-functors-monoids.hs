@@ -102,7 +102,20 @@ main8 = pure (+) <*> Just 3 <*> Just 5
 f <$> x = fmap f x
 -- now we can:
 main9 = (++) <$> Just "John" <*> Just "Reeze"
+-- so, if we want to apply f, we just write "f <$> x <*> y <*> ..."
 
+-- so, now we have applicative functor typeclass and pure, <*>, <$> functions
+-- let's try with types other than Maybe
+-- [], IO, (->) r, ZipList
+
+-- for []
+instance Applicative [] where
+    pure x = [x]
+    fs <*> xs = [f x | f <- fs, x <- xs]
+main10 = [(*0), (+100), (^2)] <*> [1, 2, 3]
+-- [0, 0, 0, 101, 102, 103, 1, 4, 9]
+main11 = [(+), (*)] <*> [1, 2] <*> [3, 4]
+main12 = (++) <$> ["ha", "heh", "hmm"] <*> ["?", "!", "."]
 
 
 
