@@ -67,12 +67,20 @@ firstLaw = case fmap id (CJust 0 "cake") of
 secondLaw = case fmap ((++ "blah") . (++ "cake")) (CJust 0 "test") of
               (CJust 2 "testcakeblah") -> True
               otherwise -> False
-              
-
 
 
 
 
 -- **** Applicative functors
+-- what about mapping an f over a functor for f with more than one argument?
+-- we get functors containing functions
+functorWithFunction :: Maybe (String -> String)
+functorWithFunction = fmap (++) (Just "hey ")
+functorWithFunctionUsed = fmap (\f -> f "you") functorWithFunction
+
+
+
+
+
 -- **** The newtype keyword
 -- **** Monoids
