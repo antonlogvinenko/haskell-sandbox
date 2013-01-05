@@ -121,7 +121,7 @@ main12 = (++) <$> ["ha", "heh", "hmm"] <*> ["?", "!", "."]
 instance Applicative IO where
     pure = return
     a <*> b = do
-      f < a
+      f <- a
       x <- b
       return (f x)
 
