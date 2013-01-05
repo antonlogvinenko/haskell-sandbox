@@ -78,6 +78,31 @@ functorWithFunction :: Maybe (String -> String)
 functorWithFunction = fmap (++) (Just "hey ")
 functorWithFunctionUsed = fmap (\f -> f "you") functorWithFunction
 
+-- what if want to apply (Just (*8)) to (Just 8)?
+-- no magic here, quire clear intentions:
+class (Functor f) => Applicative f where
+    pure :: a -> f a
+    (<*>) :: f (a -> b) -> f a -> f b
+instance Applicative Maybe where
+    pure = Just
+    Nothing <*> _ = Nothing
+    (Just f) <*> something = fmap f something
+-- so we can write:
+main5 = Just (+3) <*> Just 9
+main6 = Just (++"haha") <*> Nothing
+main7 = pure (*3) <*> Just 9
+-- or even like that:
+main8 = pure (+) <*> Just 3 <*> Just 5
+
+-- now, further:
+-- "pure f <*> x" is the same as "fmap f x"
+-- "pure f <*> x <*> y <*> ..." is the same as "fmap f x <*> y <*> ..."
+-- so, let's define an operator:
+(<$>) :: (Functor f) => (a -> b) -> f a -> f b
+f <$> x = fmap f x
+-- now we can:
+main9 = (++) <$> Just "John" <*> Just "Reeze"
+
 
 
 
