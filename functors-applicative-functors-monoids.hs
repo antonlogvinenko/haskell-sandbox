@@ -2,8 +2,10 @@ import Data.Char
 import Data.List 
 --import Control.Monad.Instances
 
--- **** Functors redux
 
+
+
+-- **** Functors redux
 -- class Functor f where
 --     fmap :: (a -> b) -> f a -> f b
 
@@ -35,6 +37,42 @@ main3 = fmap (*3) (+100)
 main4 :: (Functor f, Num a) => f a -> f a
 main4 = fmap (*2)
 
--- Applicative functors
--- The newtype keyword
--- Monoids
+-- first functor law
+-- if we map the id function over the functor
+-- then the functor we get back should be the same as the original functor
+-- i.e., fmap id = id
+mustHold = fmap id (Just 3) == (Just 3)
+
+-- second functor law
+-- composing two functions and mapping the result over a functor
+-- should be the same as first mapping one function over the functor
+-- and then mapping the other one
+-- i.e., fmap (f . g) = fmap f . fmap g
+-- or fmap (f . g) F = fmap f (fmap g F)
+
+
+-- Pathological example of a type constructor
+-- being an instance of Functor typeclass
+-- but not really being a Functor
+data CMaybe a = CNothing | CJust Int a deriving (Show)
+
+instance Functor CMaybe where
+    fmap f CNothing = CNothing
+    fmap f (CJust counter x) = CJust (counter + 1) (f x)
+
+-- breaking the law
+firstLaw = case fmap id (CJust 0 "cake") of
+             (CJust 0 "cake") -> True
+             otherwise -> False
+secondLaw = case fmap ((++ "blah") . (++ "cake")) (CJust 0 "test") of
+              (CJust 2 "testcakeblah") -> True
+              otherwise -> False
+              
+
+
+
+
+
+-- **** Applicative functors
+-- **** The newtype keyword
+-- **** Monoids
