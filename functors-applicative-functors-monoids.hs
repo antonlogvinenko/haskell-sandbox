@@ -31,6 +31,9 @@ instance Functor ((->) r) where
 
 main3 = fmap (*3) (+100)
 
+--even more weird, with currying
+main4 :: (Functor f, Num a) => f a -> f a
+main4 = fmap (*2)
 
 -- Applicative functors
 -- The newtype keyword
