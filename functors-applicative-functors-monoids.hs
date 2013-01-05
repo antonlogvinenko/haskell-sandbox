@@ -117,6 +117,15 @@ main10 = [(*0), (+100), (^2)] <*> [1, 2, 3]
 main11 = [(+), (*)] <*> [1, 2] <*> [3, 4]
 main12 = (++) <$> ["ha", "heh", "hmm"] <*> ["?", "!", "."]
 
+-- for IO
+instance Applicative IO where
+    pure = return
+    a <*> b = do
+      f < a
+      x <- b
+      return (f x)
+
+
 
 
 
