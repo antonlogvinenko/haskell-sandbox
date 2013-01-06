@@ -219,3 +219,50 @@ main26 = helloMe undefined
 
 
 -- **** Monoids
+-- a typeclass with associative binary function and an identity function
+class Monoid m where
+    mempty :: m
+    mappend :: m -> m -> m
+    mconcat :: [m] -> m
+    mconcat = foldr mappend mempty
+
+-- rules for monoids:
+-- mempty `mappend` x = x
+-- x `mappend` mempty = x
+-- (x `mappend` y) `mappend` z = x `mappend` (y `mappend` z)
+
+-- Lists are monoids
+instance Monoid [a] where
+    mempty = []
+    mappend = (++)
+
+-- Product and Sum
+newtype Product a = Product { getProduct :: a }
+    deriving (Eq, Ord, Read, Show, Bounded)
+instance Num a => Monoid (Product a) where
+    mempty = Product 1
+    Product x `mappend` Product y = Product (x * y)
+main27 = getProduct . mconcat . map Product $ [3, 4, 2]
+
+-- Any and All
+newtype Any  = Any { getAny :: Bool }
+    deriving (Eq, Ord, Read, Show, Bounded)
+instance Monoid Any where
+    mempty = Any False
+    Any x `mappend` Any y = Any (x || y)
+main28 = getAny. mconcat . map Any $ [False, False, True, False]
+
+newtype All = All { getAll :: Bool }
+    deriving (Eq, Ord, Read, Show, Bounded)
+instance Monoid All where
+    mempty = All True
+    All x `mappend` All y = All (x && y)
+main29 = getAll . mconcat . map All $ [True, True, False]
+
+-- Ordering
+
+
+-- Maybe
+
+-- Using to fold data structure 
+
