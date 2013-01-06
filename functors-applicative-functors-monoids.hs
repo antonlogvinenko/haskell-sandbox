@@ -189,7 +189,19 @@ main24 = and $ sequenceA''' [(>4), (<10), odd] 7
 
 
 -- **** The newtype keyword
+-- newtype for creation faster types based on existing types
+-- but with only one constructor
+newtype CharList = CharList { getCharList :: [Char] } deriving (Eq, Show)
+-- CharList :: [Char] -> CharList
+-- getCharList ::CharList -> [Char]
 
+-- newtype for making new class instances
+-- to make a functor over the first parameter of something, not the first one
+newtype Pair b a = Pair { getPair :: (a, b) }
+instance Functor (Pair c) where
+    fmap f (Pair (x, y)) = Pair (f x, y)
+
+-- newtype laziness
 
 
 -- **** Monoids
