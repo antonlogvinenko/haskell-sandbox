@@ -155,7 +155,9 @@ main15 = (\x y z -> [x, y, z]) <$> (+3) <*> (*2) <*> (/2) $ 5
 -- applicative approach allows us to build n-arity zipWith
 
 -- and now, for something completely different, liftA2 function
-
+liftA2' :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
+liftA2' f a b = f <$> a <*> b
+main18 = liftA2' (:) (Just 3) (Just [4])
 
 
 
