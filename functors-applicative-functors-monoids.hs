@@ -136,7 +136,11 @@ main13 = do
 instance Applicative ((->) r) where
     pure x = (\_ -> x)
     f <*> g = \x -> f x (g x)
-main14 = pure (+) <*> (+3)
+main14 = (+) <$> (+3) <*> (*100) $ 5
+main15 = (\x y z -> [x, y, z]) <$> (+3) <*> (*2) <*> (/2) $ 5
+
+-- k <$> f <*> g    -   k will be called on eventual results from f and g
+-- k <$> Just a <$> Just b   -   k will be called on values that may or may not be there
 
 
 
