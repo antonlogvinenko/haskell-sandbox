@@ -1,5 +1,6 @@
 import Data.Char  
 import Data.List 
+--import qualified Control.Applicative as Appl
 --import Control.Monad.Instances
 
 
@@ -142,6 +143,18 @@ main15 = (\x y z -> [x, y, z]) <$> (+3) <*> (*2) <*> (/2) $ 5
 -- k <$> f <*> g    -   k will be called on eventual results from f and g
 -- k <$> Just a <$> Just b   -   k will be called on values that may or may not be there
 
+-- for ZipList, another way for lists to be applicative functors
+--instance Applicative ZipList where
+--    pure x = ZipList (repeat x)
+--    ZipList fs <*> ZipList xs = ZipList (zipWith (\f x -> f x) fs xs)
+--main16 = getZipList $ ZipList [(+), (+), (+)] <*> ZipList [100, 100, 100] <*> ZipList [1, 2, 3]
+--main17 = getZipList $ (+) <$> ZipList [100, 100, 100] <*> ZipList [1, 2, 3]
+-- ,, is (\x y z -> (x, y, z))
+-- , is (\x y -> (x, y))
+-- standard library contains functions: zipWithN, N in [1..7]
+-- applicative approach allows us to build n-arity zipWith
+
+-- and now, for something completely different, liftA2 function
 
 
 
