@@ -159,6 +159,19 @@ liftA2' :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
 liftA2' f a b = f <$> a <*> b
 main18 = liftA2' (:) (Just 3) (Just [4])
 
+-- sequenceA'
+sequenceA' :: (Applicative f) => [f a] -> f [a]
+sequenceA' [] = pure []
+sequenceA' (x : xs) = (:) <$> x <*> sequenceA' xs
+
+-- hmm, let's use liftA2!
+sequenceA'' :: (Applicative f) => [f a] -> f [a]
+sequenceA'' [] = pure []
+sequenceA'' (x : xs) = liftA2' (:) x $ sequenceA'' xs
+
+-- or let's use foldr
+sequenceA''' :: (Applicative f) => [f a] -> f [a]
+sequenceA''' = foldr (liftA2' (:)) (pure [])
 
 
 -- **** The newtype keyword
