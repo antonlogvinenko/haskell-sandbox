@@ -202,6 +202,20 @@ instance Functor (Pair c) where
     fmap f (Pair (x, y)) = Pair (f x, y)
 
 -- newtype laziness
+-- evaluation of undefined leads to an exception, we'll use it later
+main25 = undefined
+newtype CoolBool = CoolBool { getCoolBool :: Bool }
+helloMe :: CoolBool -> String
+helloMe (CoolBool _) = "Hello"
+-- no exception here:
+main26 = helloMe undefined
+
+-- type vs newtype vs data
+-- type - for just synonyms
+-- newtype - wrapping an existing type into a new one
+-- data - making new data types
+
+
 
 
 -- **** Monoids
