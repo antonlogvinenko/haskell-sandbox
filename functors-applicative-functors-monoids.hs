@@ -179,6 +179,17 @@ main22 = sequenceA''' [[1, 2, 3], [4, 5, 6]]
 main23 = sequenceA''' [(>4), (<10), odd] 7
 main24 = and $ sequenceA''' [(>4), (<10), odd] 7
 
+-- rules for applicative functors:
+-- pure id <*> v = v
+-- pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
+-- pure f <*> pure x = pure (f x)
+-- u <*> pure y = pure ($ y) <*> u
+
+
+
 
 -- **** The newtype keyword
+
+
+
 -- **** Monoids
