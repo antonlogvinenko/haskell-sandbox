@@ -172,6 +172,12 @@ sequenceA'' (x : xs) = liftA2' (:) x $ sequenceA'' xs
 -- or let's use foldr
 sequenceA''' :: (Applicative f) => [f a] -> f [a]
 sequenceA''' = foldr (liftA2' (:)) (pure [])
+main19 = sequenceA''' [Just 3, Just 2, Just 1]
+main20 = sequenceA''' [Just 1, Nothing, Just 5]
+main21 = sequenceA''' [(+3), (+2), (+1)] 1
+main22 = sequenceA''' [[1, 2, 3], [4, 5, 6]]
+main23 = sequenceA''' [(>4), (<10), odd] 7
+main24 = and $ sequenceA''' [(>4), (<10), odd] 7
 
 
 -- **** The newtype keyword
