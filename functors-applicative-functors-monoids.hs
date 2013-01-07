@@ -270,7 +270,22 @@ lengthCompare :: String -> String -> Ordering
 lengthCompare x y = (length x `compare` length y) `mappend` (x `compare` y)
 
 -- Maybe
+instance Monoid a => Monoid (Maybe a) where
+    mempty = Nothing
+    Nothing `mappend` m = m
+    m `mappend` Nothing = m
+    Just m1 `mappend` Just m2 = Just (m1 `mappend` m2)
+main30 = Nothing `mappend` Just "andy"
 
+newtype First a = First { getFirst :: Maybe a }
+    deriving (Eq, Ord, Read, Show)
+
+instance Monoid (First a) where
+    mempty = First Nothing
+    First (Just x) `mappend` _ = First (Just x)
+    First Nothing `mappend` x = x
+
+main31 = getFirst . mconcat . map First $ [Nothing, Just 9, Just 10]
 
 -- Using to fold data structure 
 
