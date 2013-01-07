@@ -106,6 +106,7 @@ main22 = return (0, 0) >>== landLeft' 1 >>> Nothing >>== landRight' 2
 
 -- **** do notation
 -- do is a special syntax for monads
+-- !! () can be omitted, left for an example to be clear
 main23 = Just 3 >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y))) 
 main24 = Just 3 >>= (\x -> Nothing >>= (\y -> Just (show x ++ y)))
 
@@ -162,8 +163,21 @@ wopwop = do
 
 
 -- **** The list monad
+instance Monad' [] where
+    return' x = [x]
+    xs >>== f = concat (map f xs)
+    fail' _ = []
 
+main25 = [3, 4, 5] >>= \x -> [x, -x]
+main26 = [1, 2] >>= \n -> ['a', 'b'] >>= \ch -> return (n, ch)
 
+listOfTuples :: [(Int, Char)]
+listOfTuples = do
+  n <- [1, 2]
+  ch <- ['a', 'b']
+  return (4, ch)
+
+-- list comprehensions are syntaxctic sugar for a list monadic operations
 
 
 -- **** Monad laws
