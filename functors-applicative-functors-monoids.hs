@@ -2,7 +2,7 @@ import Data.Char
 import Data.List 
 --import qualified Control.Applicative as Appl
 --import Control.Monad.Instances
-
+--import qualified Data.Foldable as F
 
 
 
@@ -288,3 +288,33 @@ instance Monoid (First a) where
 main31 = getFirst . mconcat . map First $ [Nothing, Just 9, Just 10]
 
 -- Using to fold data structure
+data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+
+class Foldable f where
+    foldMap :: (Monoid m) => (a -> m) -> f a -> m
+
+instance Foldable Tree where
+    foldMap f Empty = mempty
+    foldMap f (Node x l r) = foldMap f l `mappend`
+                             f x `mappend`
+                             foldMap f r
+
+-- we are provided with
+-- 1. a function f that takes an element of our tree and returns a monoid value
+-- 2. a tree
+testTree = Node 5  
+            (Node 3  
+                (Node 1 Empty Empty)  
+                (Node 6 Empty Empty)  
+            )  
+            (Node 9  
+                (Node 8 Empty Empty)  
+                (Node 10 Empty Empty)  
+            ) 
+
+-- Ihhhhaaa!
+main32 = foldMap Product testTree
+main33 = foldMap (\x -> Any $ x == 3) testTree
+main34 = foldMap (\x -> All $ x == 3) testTree
+main35 = foldMap (\x -> [x]) testTree
+
