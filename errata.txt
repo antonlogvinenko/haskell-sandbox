@@ -18,10 +18,4 @@ http://learnyouahaskell.com/functors-applicative-functors-and-monoids#monoids
 import qualified Foldable as F  
 import qualified Data.Foldable as F
 
-http://learnyouahaskell.com/a-fistful-of-monads
-where talking about lists as monads
-guard (5 > 2) >> return "cool" :: [String] 
-must be
-guard (5 > 2) >>= return "cool" :: [String] 
-and the next example too
-and :: [String] not required too
+
