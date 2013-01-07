@@ -195,8 +195,28 @@ guard False = mzero
 main27 = guard (5 > 2) :: [()]
 main28 = guard (1 > 2) :: [()]
 
-main29 = guard (5 > 2) >>= return "cool"
-main30 = guard (1 > 2) >>= return "cool"
+main29 = guard (5 > 2) >> return "cool" :: [String]
+main30 = guard (1 > 2) >> return "cool" :: [String]
+
+-- >> is expressied with >>= and passing [()] or [] may work as id or map-to-[]
+-- we also know that not using <- in a do notation means using >>
+-- so we write:
+
+sevensOnly :: [Int]
+sevensOnly = do
+  x <- [1..50]
+  guard ('7' `elem` show x)
+  return x
+-- is just the same as:
+main31 = [1..50] >>= \x -> guard ('7' `elem` show x) >> return x
+
+
+
+
+-- **** A knight's quest
+
+
+
 
 -- **** Monad laws
 
