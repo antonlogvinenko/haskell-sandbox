@@ -53,10 +53,59 @@ main10 = Nothing >>= \x -> return (x * 10)
 
 
 
+
 -- **** Walk the line (example)
+type Birds = Int
+type Pole = (Birds, Birds)
+
+landLeft :: Birds -> Pole -> Pole
+landLeft n (left, right) = (left + n, right)
+
+landRight :: Birds -> Pole -> Pole
+landRight n (left, right) = (left, right + n)
+
+main11 = landLeft 2 (0, 0)
+main12 = landRight 1 (1, 2)
+main13 = landLeft 2 (landRight 1 (landLeft 1 (0, 0)))
+
+-- defining a function that changes the order
+x -: f = f x
+
+main14 = (0, 0) -: landLeft 2
+main15 = (0, 0) -: landLeft 2 -: landRight 1 -: landLeft 2
+
+-- making function fail:
+landLeft' :: Birds -> Pole -> Maybe Pole
+landLeft' n (left, right)
+         | abs ((left + n) - right) < 4 = Just (left + n, right)
+         | otherwise = Nothing
+landRight' :: Birds -> Pole -> Maybe Pole
+landRight' n (left, right)
+          | abs (left - (right + n)) < 4 = Just (left, right + n)
+          | otherwise = Nothing
+main16 = landLeft 2 (0, 0)
+main17 = landLeft 10 (0, 3)
+main18 = landRight 1 (0, 0) -: landLeft 2
+
+main19 = landRight' 1 (0, 0) >>== landLeft' 2 >>== landLeft' 1 >>== landRight' 5 >>== landRight' 1
+main20 = return (0, 0) >>== landRight' 2 >>== landLeft' 2 >>== landRight' 2
+
+banana :: Pole -> Maybe Pole
+banana _ = Nothing
+
+main21 = return (0, 0) >>== landLeft' 1 >>== banana >>== landRight' 2
+
+-- let's use >>
+main22 = return (0, 0) >>== landLeft' 1 >>> Nothing >>== landRight' 2
+
+-- >>= is about "desctructiring" a container, using its value with a given function
+-- to build a new container
+
+
 
 
 -- **** do notation
+
 
 -- **** The list monad
 
