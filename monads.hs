@@ -107,6 +107,14 @@ main22 = return (0, 0) >>== landLeft' 1 >>> Nothing >>== landRight' 2
 -- **** do notation
 
 
+
+
 -- **** The list monad
 
+
+
+
 -- **** Monad laws
+
+
+
