@@ -5,6 +5,8 @@
 -- Monads are applicative funcotrs that support >>= operation (bind)
 
 -- **** Getting out feet with Monad
+-- Maybe as a functor
+main1 = fmap (++"!") (Just "wisdom")
 
 
 -- **** The Monad type class
