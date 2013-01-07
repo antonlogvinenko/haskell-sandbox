@@ -178,7 +178,25 @@ listOfTuples = do
   return (4, ch)
 
 -- list comprehensions are syntaxctic sugar for a list monadic operations
+-- but what about filtering in list comprehensions?
+-- class MonadPlus, for Monads beins also Monoids
+class Monad m => MonadPlus m where
+    mzero :: m a
+    mplus :: m a -> m a -> m a
 
+instance MonadPlus [] where
+    mzero = []
+    mplus = (++)
+
+guard :: (MonadPlus m) => Bool -> m ()
+guard True = return ()
+guard False = mzero
+
+main27 = guard (5 > 2) :: [()]
+main28 = guard (1 > 2) :: [()]
+
+main29 = guard (5 > 2) >>= return "cool"
+main30 = guard (1 > 2) >>= return "cool"
 
 -- **** Monad laws
 
