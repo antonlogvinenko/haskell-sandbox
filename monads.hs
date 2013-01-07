@@ -105,6 +105,58 @@ main22 = return (0, 0) >>== landLeft' 1 >>> Nothing >>== landRight' 2
 
 
 -- **** do notation
+-- do is a special syntax for monads
+main23 = Just 3 >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y))) 
+main24 = Just 3 >>= (\x -> Nothing >>= (\y -> Just (show x ++ y)))
+
+foo :: Maybe String 
+foo = do
+  x <- Just 3
+  y <- Just "!"
+  return (show x ++ y)
+
+-- main20 = return (0, 0) >>== landRight' 2 >>== landLeft' 2 >>== landRight' 2
+foo2 :: Maybe Pole
+foo2 = do
+  x <- return (0, 0)
+  y <- landRight' 2 x
+  z <- landLeft' 2 y
+  r <- landRight' 2 z
+  return r
+
+-- do syntax for more common >>= application order
+-- it's clear why do result is the result of the last line
+
+marySue :: Maybe Bool
+marySue = do
+  x <- Just 9
+  Just (x > 8)
+
+-- not writing a <- is equivalent to using >>
+
+routine :: Maybe Pole
+routine = do
+  start <- return (0, 0)
+  first <- landLeft' 2 start
+  Nothing
+  second <- landRight' 2 first
+  landLeft' 1 second
+
+-- pattern matching
+justH :: Maybe Char
+justH = do
+  (x : xs) <- Just "hello"
+  return x
+-- when matching falis, the next pattern is matched
+-- when pattern mathching fails in a do expression, the fail function is called
+
+-- monads that incorporate a context of possible failure implement their own fail function
+-- fail _ = Nothing
+-- example:
+wopwop :: Maybe Char
+wopwop = do
+  (x : xs) <- Just ""
+  return x
 
 
 
