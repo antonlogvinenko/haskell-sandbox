@@ -260,9 +260,17 @@ instance Monoid All where
 main29 = getAll . mconcat . map All $ [True, True, False]
 
 -- Ordering
+instance Monoid Ordering where
+    mempty = EQ
+    LT `mappend` _ = LT
+    EQ `mappend` y = y
+    GT `mappend` _ = GT
 
+lengthCompare :: String -> String -> Ordering
+lengthCompare x y = (length x `compare` length y) `mappend` (x `compare` y)
 
 -- Maybe
+
 
 -- Using to fold data structure 
 
