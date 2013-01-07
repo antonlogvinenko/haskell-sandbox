@@ -30,13 +30,13 @@ main7 = Just 2 `applyMaybe` \x -> if x > 2 then Just x else Nothing
 
 
 -- **** The Monad type class
-class Monad m where
+class Monad' m where
     return :: a -> m a
 
-    (>==) :: m a -> a -> m b -> m b
+    (>>>=) :: m a -> (a -> m b) -> m b
 
-    (>>) :: m a -> m b -> m b
-    x >> y = x >>= \_ -> y
+    (>>>) :: m a -> m b -> m b
+    x >>> y = x >>>= \_ -> y
 
     fail :: String -> m a
     fail msg = error msg
