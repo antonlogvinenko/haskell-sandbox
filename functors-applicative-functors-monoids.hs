@@ -287,5 +287,4 @@ instance Monoid (First a) where
 
 main31 = getFirst . mconcat . map First $ [Nothing, Just 9, Just 10]
 
--- Using to fold data structure 
-
+-- Using to fold data structure
