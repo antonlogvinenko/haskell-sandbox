@@ -31,15 +31,26 @@ main7 = Just 2 `applyMaybe` \x -> if x > 2 then Just x else Nothing
 
 -- **** The Monad type class
 class Monad' m where
-    return :: a -> m a
+    return' :: a -> m a
 
-    (>>>=) :: m a -> (a -> m b) -> m b
+    (>>==) :: m a -> (a -> m b) -> m b
 
     (>>>) :: m a -> m b -> m b
-    x >>> y = x >>>= \_ -> y
+    x >>> y = x >>== \_ -> y
 
-    fail :: String -> m a
-    fail msg = error msg
+    fail' :: String -> m a
+    fail' msg = error msg
+
+instance Monad' Maybe where
+    return' x = Just x
+    Nothing >>== f = Nothing
+    Just x >>== f = f x
+    fail' _ = Nothing
+
+main8 = return "Hat" :: Maybe String
+main9 = Just 9 >>= \x -> return (x * 10)
+main10 = Nothing >>= \x -> return (x * 10)
+
 
 
 -- **** Walk the line (example)
