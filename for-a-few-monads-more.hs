@@ -46,10 +46,30 @@ multWithLog = do
 main4 = runWriter' multWithLog
 
 -- tell function is used to add logs
+-- be careful with monoid to use - lists can be very slow
+
+-- difference lists:
+-- prepending create another external lambda
+-- any call calculates it all
+-- \xs -> "dog" ++ ("meat" ++ xs)  
+newtype DiffList a = DiffList { getDiffList :: [a] -> [a] }
+
+toDiffList :: [a] -> DiffList a  
+toDiffList xs = DiffList (xs ++)  
+
+fromDiffList :: DiffList a -> [a]  
+fromDiffList (DiffList f) = f []
+
+instance Monoid (DiffList a) where
+    mempty = DiffList (\xs -> [] ++ xs)
+    (DiffList f) `mappend` (DiffList g) = DiffList (\xs -> f (g xs))
+
 
 
 
 -- **** Reader 3
+
+
 
 -- **** Stateful computations 10
 
