@@ -1,4 +1,5 @@
 import Data.Monoid
+import Control.Monad.Writer
 
 -- **** Writer 18
 -- Writer: logging context
@@ -25,24 +26,27 @@ addDrink _ = ("beer", Sum 30)
 main2 = ("beans", Sum 20) `applyLog` addDrink
 
 -- the Writer type
-newtype Writer w a = Writer { runWriter :: (a, w) }
+newtype Writer' w a = Writer' { runWriter' :: (a, w) }
 
-instance (Monoid w) => Monad (Writer w) where
-    return x = Writer (x, mempty)
-    (Writer (x, v)) >>= f = let (Writer (y, v')) = f x in Writer (y, v `mappend` v')
+instance (Monoid w) => Monad (Writer' w) where
+    return x = Writer' (x, mempty)
+    (Writer' (x, v)) >>= f = let (Writer' (y, v')) = f x in Writer' (y, v `mappend` v')
 
-main3 = runWriter (return 3 :: Writer (Product Int) Int)
+main3 = runWriter' (return 3 :: Writer' (Product Int) Int)
 
 -- do notation with Writer
-logNumber :: Int -> Writer [String] Int
-logNumber x = Writer (x, ["GotNumber: " ++ show x])
+logNumber' :: Int -> Writer' [String] Int
+logNumber' x = Writer' (x, ["GotNumber: " ++ show x])
 
-multWithLog :: Writer [String] Int
+multWithLog :: Writer' [String] Int
 multWithLog = do
-  a <- logNumber 3
-  b <- logNumber 5
+  a <- logNumber' 3
+  b <- logNumber' 5
   return (a * b)
-main4 = runWriter multWithLog
+main4 = runWriter' multWithLog
+
+-- tell function is used to add logs
+
 
 
 -- **** Reader 3
