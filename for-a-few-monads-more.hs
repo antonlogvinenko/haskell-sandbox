@@ -67,7 +67,7 @@ instance Monoid (DiffList a) where
 
 
 
--- **** Reader
+-- **** Reader 3
 
 
 
