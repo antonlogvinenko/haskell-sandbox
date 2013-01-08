@@ -242,6 +242,18 @@ main33 = (2,2) `canReachIn3` (2,2)
 
 
 -- **** Monad laws
+-- Left identity
+-- return x >> f   must be the same as   f x
 
+-- Right identity
+-- m >>= return    must be the same as   m
 
+-- Associativity
+-- (m >>= f) >>= g    must be the same as    m >>= (\x -> f x >>= g)
 
+main34 = return' (0,0) >>= landRight' 2 >>= landLeft' 2 >>= landRight' 2  
+main35 = ((return' (0,0) >>= landRight' 2) >>= landLeft' 2) >>= landRight' 2 
+
+main36 = return' (0,0) >>= (\x -> landRight' 2 x >>= (\y -> landLeft' 2 y >>= (\z -> landRight' 2 z)))
+
+-- sometimes we require the second form because of closures arguments required
