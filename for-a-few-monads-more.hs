@@ -1,7 +1,7 @@
 import Data.Monoid
 import Control.Monad.Writer
 
--- **** Writer 18
+-- **** Writer
 -- Writer: logging context
 isBigBang :: Int -> (Bool, String)
 isBigBang x = (x > 9, "Compared gang size to 9.")
@@ -67,7 +67,8 @@ instance Monoid (DiffList a) where
 
 
 
--- **** Reader 3
+-- **** Reader
+
 
 
 
