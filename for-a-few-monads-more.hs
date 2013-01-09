@@ -1,5 +1,6 @@
 import Data.Monoid
 import Control.Monad.Writer
+import Control.Monad.Instances
 
 -- **** Writer
 -- Writer: logging context
@@ -68,6 +69,22 @@ instance Monoid (DiffList a) where
 
 
 -- **** Reader 3
+-- instance Monad ((->) r) where
+--    return x = \_ -> x
+--    h >>= f = \w -> f (h w) w
+
+addStuff :: Int -> Int
+addStuff = do
+  a <- (*2)
+  b <- (+10)
+  return (a+b)
+main5 = addStuff 3
+-- (*2) >>= (\a -> (+10) >>= (\b -> return (a+b)))   applied to 3
+
+-- (+10) >>= (\b -> return (6+b))   applied to 3
+-- return (6+13)   applied to 3
+-- (\_ -> 19)   applied to 3
+-- 19
 
 
 
