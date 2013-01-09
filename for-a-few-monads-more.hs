@@ -1,6 +1,7 @@
 import Data.Monoid
 import Control.Monad.Writer
 import Control.Monad.Instances
+import Control.Monad.State
 
 -- **** Writer
 -- Writer: logging context
@@ -90,6 +91,56 @@ main5 = addStuff 3
 
 
 -- **** Stateful computations 10
+-- stateful computation: s -> (a, s), where s it the type of the state and a - the result of
+-- stateful computations
+type Stack = [Int]
+
+pop1 :: Stack -> (Int, Stack)
+pop1 (x : xs) = (x, xs)
+
+push1 :: Int -> Stack -> ((), Stack)
+push1 a xs = ((), a : xs)
+
+stackManip :: Stack -> (Int, Stack)
+stackManip stack = let
+    ((), newStack1) = push1 3 stack
+    (a, newStack2) = pop1 newStack1
+    in pop1 newStack2
+
+main6 = stackManip [5, 8, 2, 1]
+
+newtype State s a = State { runState :: s -> (a,s) }
+
+instance Monad (State s) where  
+    return x = State $ \s -> (x,s)  
+    (State h) >>= f = State $ \s -> let (a, newState) = h s  
+                                        (State g) = f a
+                                    in  g newState  
+
+pop :: State Stack Int  
+pop = State $ \(x : xs) -> (x, xs)  
+  
+push :: Int -> State Stack ()  
+push a = State $ \xs -> ((), a : xs) 
+
+stackManip2 :: State Stack Int  
+stackManip2 = do  
+    push 3  
+    a <- pop
+    pop
+
+-- push 3 >>= (\_ -> pop >>= (\a -> (\_ - pop)))
+-- 
+
+main7 = runState stackManip2 [5, 8, 2, 1]
+
+stackManip3 :: State Stack Int  
+stackManip3 = do  
+    push 3  
+    pop  
+    pop  
+
+main8 = runState stackManip3 [5, 8, 2, 1]
 
 -- **** Errors 3
 
