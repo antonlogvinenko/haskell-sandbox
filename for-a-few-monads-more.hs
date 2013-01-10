@@ -1,6 +1,7 @@
 import Data.Monoid
 import Control.Monad.Writer
 import Control.Monad.Instances
+import Control.Monad.Error
 --import Control.Monad.State
 
 -- **** Writer
@@ -171,9 +172,20 @@ stackyStack = do
 
 
 
-
 -- **** Errors 3
+-- instance (Error e) => Monad (Either e) where
+--     return x = Right x
+--     Right x >>= f = f x
+--     Left err >>= f = Left err
+--     fail msg = Left (strMsg msg)
+main10 = Right 3 >>= \x -> return (x + 100)
+main11 = Left "boom" >>= \x -> return (x + 1)
+
+
+
 
 -- **** Useful monadic functions 18
+
+
 
 -- **** Making monads 6
