@@ -2,6 +2,7 @@ import Data.Monoid
 import Control.Monad.Writer
 import Control.Monad.Instances
 import Control.Monad.Error
+import Control.Monad
 --import Control.Monad.State
 
 -- **** Writer
@@ -185,7 +186,56 @@ main11 = Left "boom" >>= \x -> return (x + 1)
 
 
 -- **** Useful monadic functions 18
+-- liftM
+-- Applicative Functors are Functors
+-- Monads are Applicative Functors, thought not definied explicitly
+
+-- fmap :: (Monad m) => (a -> b) -> m a -> m b
+liftM :: (Monad f) => (a -> b) -> f a -> f b
+liftM f m = m >>= (\x -> return (f x))
+
+liftM' :: (Monad m) => (a -> b) -> m a -> m b
+liftM' f m = do
+  x <- m
+  return (f x)
+
+-- <*> :: (Applicative f) => f (a -> b) -> f a -> f b
+ap :: (Monad m) => m (a -> b) -> m a -> m b
+ap mf m = do
+  f <- mf
+  x <- m
+  return (f x)
+
+-- mf >>= (\f -> (\x -> return (f x)))
+
+-- join
+join' :: (Monad m) => m (m a) -> m a
+join' mm = do
+  m <- mm
+  m
+
+main12 = join' (Just (Just 9))
+main13 = join' [[1, 2, 3], [4, 5, 6]]
+
+
+-- filterM
+-- filterM :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
+
+-- foldM
+-- foldM :: (Monad m) => (a -> b -> m a) -> a -> [b] -> m a
+
+
+
+
+
+-- safer RPN calculator
+
+-- composing monadic functions
+
 
 
 
 -- **** Making monads 6
+
+
+
