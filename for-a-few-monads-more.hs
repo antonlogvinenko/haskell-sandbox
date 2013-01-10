@@ -1,7 +1,7 @@
 import Data.Monoid
 import Control.Monad.Writer
 import Control.Monad.Instances
-import Control.Monad.State
+--import Control.Monad.State
 
 -- **** Writer
 -- Writer: logging context
@@ -115,9 +115,8 @@ instance Monad (State s) where
     return x = State $ \s -> (x,s)  
     (State h) >>= f = State $ \s -> let (a, newState) = h s  
                                         (State g) = f a
-                                    in  g newState  
-
-pop :: State Stack Int  
+                                    in  g newState
+pop :: State Stack Int
 pop = State $ \(x : xs) -> (x, xs)  
   
 push :: Int -> State Stack ()  
@@ -130,7 +129,6 @@ stackManip2 = do
     pop
 
 -- push 3 >>= (\_ -> pop >>= (\a -> (\_ - pop)))
--- 
 
 main7 = runState stackManip2 [5, 8, 2, 1]
 
@@ -141,6 +139,38 @@ stackManip3 = do
     pop  
 
 main8 = runState stackManip3 [5, 8, 2, 1]
+
+stackStuff :: State Stack ()
+stackStuff = do
+  a <- pop
+  if a== 5
+     then push 5
+     else do
+       push 3
+       push 8
+
+main9 = runState stackStuff [9, 0, 2, 1, 0]
+
+moreStack :: State Stack ()
+moreStack = do
+  a <- stackManip3
+  if a == 100
+     then stackStuff
+     else return ()
+
+get = State $ \s -> (s, s)
+put newState = State $ \s -> ((), newState)
+
+stackyStack :: State Stack ()
+stackyStack = do
+  stackNow <- get
+  if stackNow == [1, 2, 3]
+     then put [8, 3, 1]
+     else put [9, 2, 1]
+
+
+
+
 
 -- **** Errors 3
 
