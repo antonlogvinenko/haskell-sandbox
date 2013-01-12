@@ -277,6 +277,7 @@ loadedCoin = Prob [(Heads,1%10),(Tails,9%10)]
 -- note: fmap in >>= definition applies will aply a function to Head or Tails, that's important
 -- a, b, c take different values one by one
 -- functional to imperative representation of computation
+
 flipThree = do  
     a <- coin  
     b <- coin  
