@@ -217,18 +217,29 @@ join' mm = do
 main12 = join' (Just (Just 9))
 main13 = join' [[1, 2, 3], [4, 5, 6]]
 
-
 -- filterM
 -- filterM :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
 
 -- foldM
 -- foldM :: (Monad m) => (a -> b -> m a) -> a -> [b] -> m a
 
-
-
-
-
 -- safer RPN calculator
+readMaybe :: (Read a) => String -> Maybe a
+readMaybe st = case reads st of [(x, "")] -> Just x
+                                _ -> Nothing
+
+foldingFunction :: [Double] -> String -> Maybe [Double]  
+foldingFunction (x:y:ys) "*" = return ((x * y):ys)  
+foldingFunction (x:y:ys) "+" = return ((x + y):ys)  
+foldingFunction (x:y:ys) "-" = return ((y - x):ys)  
+foldingFunction xs numberString = Main.liftM (:xs) (readMaybe numberString)  
+
+solveRPN :: String -> Maybe Double
+solveRPN st = do
+  [result] <- foldM foldingFunction [] (words st)
+  return result
+
+main14 = solveRPN "1 2 * 4 + 5 *"
 
 -- composing monadic functions
 
