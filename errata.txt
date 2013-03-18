@@ -6,16 +6,9 @@ http://learnyouahaskell.com/higher-order-functions
 But then, the second parameter to also has to be of that type
 
 input and output
-take 10 $ randomRs ('a','z') (mkStdGen 3) :: [Char]  
-[Char] not required?
-
-input and output
 Pure code can throw exceptions, but it they can only be caught
 http://learnyouahaskell.com/input-and-output#files-and-streams
-
 
 http://learnyouahaskell.com/functors-applicative-functors-and-monoids#monoids
 import qualified Foldable as F  
 import qualified Data.Foldable as F
-
-
